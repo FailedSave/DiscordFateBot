@@ -9,9 +9,6 @@ from settings import Settings
 
 client = discord.Client()
 
-
-
-
 @client.event
 async def on_ready():
     print('Logged in as')
@@ -39,11 +36,6 @@ async def on_message(message):
             await fate.handle_fate(client, message, message.mentions[0].name, message.mentions[0], Settings())
         else:
             await fate.handle_fate(client, message, message.author.name, message.author, Settings())
-
-
-    elif message.content.startswith('!sleep'):
-        await asyncio.sleep(5)
-        await client.send_message(message.channel, 'Done sleeping')
 
 with open('.connections.json') as json_data:
     connections = json.load(json_data)
