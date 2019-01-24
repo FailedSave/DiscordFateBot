@@ -7,6 +7,7 @@ help_string = """ASFR Bot Commands:
 **!viewsettings**: View your current settings
 **!helpless**: Toggles ability to be targeted by other users
 **!tfate <target>**: Gives the target a random ASFR effect if helpless
+**!wfate <target>**: Like tfate, but DMs the target instead of broadcasting on the channel
 **!tset <setting> <value>**: Choose settings for !tfate for your target
 **!tviewsettings**: View your current !tfate settings
 

@@ -46,11 +46,8 @@ async def on_message(message):
     if message.content.startswith('!save'):
         await setting_storage.save_settings()
 
-    if message.content.startswith('!whisperfate'):
-        if len(message.mentions) > 0:
-            await fate.handle_fate(client, message, message.mentions[0].name, message.mentions[0], Settings())
-        else:
-            await fate.handle_fate(client, message, message.author.name, message.author, Settings())
+    if message.content.startswith('!wfate'):
+        await fate.handle_whisper_fate(client, message, message.author.name, message.channel, target_settings_from_user_id(message.author))
 
 with open('.connections.json') as json_data:
     connections = json.load(json_data)

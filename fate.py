@@ -34,6 +34,31 @@ async def handle_target_fate(client, message, name, channel, settings):
         await client.send_message(channel, string)
         await asyncio.sleep(delay)
 
+async def handle_whisper_fate(client, message, name, channel, settings):
+    words = message.content.split(None, 1)
+    target_name = words[1]
+
+    target_settings = find_settings_from_name(target_name)
+    if target_settings is None:
+        await client.send_message(channel, f"**{target_name}** not found. (Have they ever interacted with me?)")
+        return
+    elif not target_settings.helpless:
+        await client.send_message(channel, f"**{target_name}** is not helpless!")
+        return
+
+    target_fate = get_fate_strings(settings)
+
+    await client.send_message(target_settings.user, f'**{target_name}**, **{message.author.name}** has decided that your fate is...')
+    target_fate_string = f"**{target_name}'s** fate is..."
+    await asyncio.sleep(delay)
+
+    for string in target_fate:
+        await client.send_message(target_settings.user, string)
+        await asyncio.sleep(delay)
+        target_fate_string = target_fate_string + string + "\n"
+
+    await client.send_message(message.author, target_fate_string)    
+
 def get_fate_strings(settings: Settings) -> list:
     strings = []
     if (check_probability(settings.stripChance)):

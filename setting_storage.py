@@ -10,6 +10,7 @@ def settings_from_user_id(user) -> Settings:
     if (user.id not in settings_dict):
         settings_dict[user.id] = Settings()
         settings_dict[user.id].name = user.name
+        settings_dict[user.id].user = user
     return settings_dict[user.id]
 
 def target_settings_from_user_id(user) -> Settings:
