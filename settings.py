@@ -140,6 +140,7 @@ async def handle_view_settings (client, message, name, channel, settings):
     await client.send_message(channel, f'**{name}**, your settings are:\n')
     settings_string = f"""
 **Name:** {settings.name}
+**Helpless:** {settings.helpless}
 **Duration:** {get_duration_description(settings.duration)}
 **Permanence chance:** {settings.permanenceChance * 100}%
 **Strip chance:** {settings.stripChance * 100}%

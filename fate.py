@@ -1,5 +1,5 @@
-from settings import Settings
-from settings import Type
+from settings import Settings, Type
+from setting_storage import find_settings_from_name
 import discord
 import asyncio
 import random
@@ -8,29 +8,49 @@ import json
 delay = 0.9
 
 async def handle_fate(client, message, name, channel, settings):
-    if (message.author.name == name):
-        await client.send_message(channel, f'**{name}**, your fate is...')
-    else:
-        await client.send_message(channel, f'**{name}**, **{message.author.name}** has decided that your fate is...')
+    await client.send_message(channel, f'**{settings.name}**, your fate is...')
     await asyncio.sleep(delay)
 
-    if (check_probability(settings.stripChance)):
-        await client.send_message(channel, get_message_for_strip(settings))
+    for string in get_fate_strings(settings):
+        await client.send_message(channel, string)
         await asyncio.sleep(delay)
+
+async def handle_target_fate(client, message, name, channel, settings):
+    words = message.content.split(None, 1)
+    target_name = words[1]
+
+    target_settings = find_settings_from_name(target_name)
+    if target_settings is None:
+        await client.send_message(channel, f"**{target_name}** not found. (Have they ever interacted with me?)")
+        return
+    elif not target_settings.helpless:
+        await client.send_message(channel, f"**{target_name}** is not helpless!")
+        return
+
+    await client.send_message(channel, f'**{target_name}**, **{message.author.name}** has decided that your fate is...')
+    await asyncio.sleep(delay)
+
+    for string in get_fate_strings(settings):
+        await client.send_message(channel, string)
+        await asyncio.sleep(delay)
+
+def get_fate_strings(settings: Settings) -> list:
+    strings = []
+    if (check_probability(settings.stripChance)):
+        strings.append(get_message_for_strip(settings))
 
     type_and_material = get_type_and_material(settings)
-    await client.send_message(channel, get_message_for_type_and_material(type_and_material))
-    await asyncio.sleep(delay)
+    strings.append(get_message_for_type_and_material(type_and_material))
 
     if (check_probability(settings.expressionChance)):
-        await client.send_message(channel, get_message_for_expression(type_and_material["effectType"]))
-        await asyncio.sleep(delay)
+        strings.append(get_message_for_expression(type_and_material["effectType"]))
 
     if (check_probability(settings.poseChance)):
-        await client.send_message(channel, get_message_for_pose(settings))
-        await asyncio.sleep(delay)
+        strings.append(get_message_for_pose(settings))
 
-    await client.send_message(channel, f'{get_duration_message(settings)}')
+    strings.append(get_duration_message(settings))
+    return strings
+    
 
 with open('data.json') as json_data:
     d = json.load(json_data)
