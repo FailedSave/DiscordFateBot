@@ -13,7 +13,7 @@ class Duration(Enum):
     protracted = 4
 
 class Settings:
-    def __init__ (self, name = "Helpless Subject", duration = Duration.longDuration, permanenceChance = 0.1, stripChance = 0.4, maxArticles = 2, expressionChance = 0.3, poseChance = 0.3, transformationAllowed = True, freezeAllowed = True, encasementAllowed = False, blacklist = [], custom = []):
+    def __init__ (self, name = "Helpless Subject", duration = Duration.longDuration, permanenceChance = 0.1, stripChance = 0.4, maxArticles = 2, expressionChance = 0.3, poseChance = 0.3, transformationAllowed = True, freezeAllowed = True, encasementAllowed = False, blacklist = [], custom = [], helpless = False):
             vars(self).update((k,v) for k,v in vars().items() if k != 'self')
 
 async def handle_set (client, message, name, channel, settings):
@@ -153,3 +153,10 @@ async def handle_view_settings (client, message, name, channel, settings):
 **Custom materials:** {settings.custom}
 """
     await client.send_message(channel, settings_string)    
+
+async def handle_helpless (client, message, name, channel, settings):
+    settings.helpless = not settings.helpless
+    if (settings.helpless):
+        await client.send_message(channel, f'**{name}** is now helpless!')
+    else:
+        await client.send_message(channel, f'**{name}** is no longer helpless.')

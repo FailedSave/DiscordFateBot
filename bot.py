@@ -5,6 +5,7 @@ from setting_storage import settings_from_user_id
 import setting_storage
 import settings
 import json
+import help
 from settings import Settings
 
 client = discord.Client()
@@ -19,6 +20,12 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+
+    if message.content.startswith('!helpless'):
+        await settings.handle_helpless(client, message, message.author.name, message.channel, settings_from_user_id(message.author))
+    elif message.content.startswith('!h'):
+        await help.handle_help(client, message, message.author.name, message.channel, settings_from_user_id(message.author))
+
     if message.content.startswith('!fate'):
         await fate.handle_fate(client, message, message.author.name, message.channel, settings_from_user_id(message.author))
 
@@ -40,4 +47,4 @@ async def on_message(message):
 with open('.connections.json') as json_data:
     connections = json.load(json_data)
 
-client.run(connections["TEST"])
+client.run(connections["MAIN"])
