@@ -49,7 +49,7 @@ async def handle_whisper_fate(client, message, name, channel, settings):
     target_fate = get_fate_strings(settings)
 
     await client.send_message(target_settings.user, f'**{target_name}**, **{message.author.name}** has decided that your fate is...')
-    target_fate_string = f"**{target_name}'s** fate is..."
+    target_fate_string = f"**{target_name}'s** fate is...\n"
     await asyncio.sleep(delay)
 
     for string in target_fate:
