@@ -13,7 +13,7 @@ class Duration(Enum):
     protracted = 4
 
 class Settings:
-    def __init__ (self, name = "Helpless Subject", duration = Duration.longDuration, permanenceChance = 0.1, stripChance = 0.4, maxArticles = 2, expressionChance = 0.3, poseChance = 0.3, transformationAllowed = True, freezeAllowed = True, encasementAllowed = False, blacklist = [], custom = [], helpless = False):
+    def __init__ (self, name = "Helpless Subject", duration = Duration.longDuration, permanenceChance = 0.1, stripChance = 0.4, maxArticles = 2, expressionChance = 0.3, poseChance = 0.3, transformationAllowed = True, freezeAllowed = False, encasementAllowed = False, blacklist = [], custom = [], helpless = False):
             vars(self).update((k,v) for k,v in vars().items() if k != 'self')
 
 async def handle_set (client, message, name, channel, settings):
