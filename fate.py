@@ -17,6 +17,8 @@ async def handle_fate(client, message, name, channel, settings):
 
 async def handle_target_fate(client, message, name, channel, settings):
     words = message.content.split(None, 1)
+    if len(words) < 2:
+        await client.send_message(channel, f"This command needs a target.")
     target_name = words[1]
 
     target_settings = find_settings_from_name(target_name)
