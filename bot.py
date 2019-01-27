@@ -52,8 +52,8 @@ async def on_message(message):
 async def autosave_task():
     await client.wait_until_ready()
     while not client.is_closed:
-        await setting_storage.save_settings()
         await asyncio.sleep(300)
+        await setting_storage.save_settings()
 
 with open('.connections.json') as json_data:
     connections = json.load(json_data)
