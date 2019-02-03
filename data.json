@@ -32,7 +32,11 @@
     "sitting casually with your legs curled under you",
     "with your arms up as if to fend off a blow",
     "in a walking pose, mid-stride",
-    "as if grasping for something out of reach"
+    "as if grasping for something out of reach",
+    "standing with your hands on your hips",
+    "sitting clutching your knees to your chest",
+    "laying on your back with your arms and legs in the air",
+    "standing with your arms and legs spread wide"
 ],
 
 "transformationMaterialsList": ["a stone statue", "a marble statue", "a polished granite statue", "a golden statue",
