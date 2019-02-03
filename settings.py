@@ -131,8 +131,8 @@ def word_list_from_string(input: str) -> list:
     strings = input.split(",")
     if (strings[0] == "none"):
         return []
-    if (len(strings) > 10):
-        strings = strings[:10]
+    if (len(strings) > 30):
+        strings = strings[:30]
     return [x.strip() for x in strings]
 
 
