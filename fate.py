@@ -118,6 +118,9 @@ def get_type_and_material(settings: Settings):
     for item in settings.custom:
         allowed_materials.append(item)
 
+    if len(allowed_materials) == 0:
+        allowed_materials.append("an inoffensive thing")
+
     return {"effectType": effectType, "material": random.choice(allowed_materials)}
 
 def does_not_contain_any(input: str, blacklist: list):
