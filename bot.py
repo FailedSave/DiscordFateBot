@@ -3,6 +3,8 @@ import asyncio
 import fate
 from setting_storage import settings_from_user_id, target_settings_from_user_id
 import setting_storage
+import stats_storage
+import stats
 import settings
 import json
 import help
@@ -17,6 +19,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
     setting_storage.load_settings()
+    stats_storage.load_stats()
 
 @client.event
 async def on_message(message):
@@ -43,6 +46,9 @@ async def on_message(message):
     if message.content.startswith('!tviewsettings'):
         await settings.handle_view_settings(client, message, message.author.name, message.channel, target_settings_from_user_id(message.author))
 
+    if message.content.startswith('!stats'):
+        await stats.handle_view_stats(client, message, message.author.name, message.channel)
+
     if message.content.startswith('!save'):
         await setting_storage.save_settings()
 
@@ -54,6 +60,7 @@ async def autosave_task():
     while not client.is_closed:
         await asyncio.sleep(300)
         await setting_storage.save_settings()
+        await stats_storage.save_stats()
 
 with open('.connections.json') as json_data:
     connections = json.load(json_data)

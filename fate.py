@@ -4,6 +4,7 @@ import discord
 import asyncio
 import random
 import json
+import stats_storage
 
 delay = 0.9
 
@@ -14,6 +15,7 @@ async def handle_fate(client, message, name, channel, settings):
     for string in get_fate_strings(settings):
         await client.send_message(channel, string)
         await asyncio.sleep(delay)
+    stats_storage.increment_fate()
 
 async def handle_target_fate(client, message, name, channel, settings):
     words = message.content.split(None, 1)
@@ -36,6 +38,8 @@ async def handle_target_fate(client, message, name, channel, settings):
     for string in get_fate_strings(settings):
         await client.send_message(channel, string)
         await asyncio.sleep(delay)
+    stats_storage.increment_fate()
+    
 
 async def handle_whisper_fate(client, message, name, channel, settings):
     words = message.content.split(None, 1)
@@ -64,6 +68,7 @@ async def handle_whisper_fate(client, message, name, channel, settings):
         target_fate_string = target_fate_string + string + "\n"
 
     await client.send_message(message.author, target_fate_string)    
+    stats_storage.increment_fate()
 
 def get_fate_strings(settings: Settings) -> list:
     strings = []

@@ -25,6 +25,12 @@ def find_settings_from_name(name) -> Settings:
             return settings
     return None
 
+def get_users_count():
+    return len(settings_dict.keys())
+
+def get_helpless_users_count():
+    return len([item for item in settings_dict.values() if item.helpless])
+
 async def save_settings():
     output = open('settings.pkl', 'wb')
 
