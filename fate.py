@@ -5,7 +5,7 @@ import asyncio
 import random
 import json
 import stats_storage
-
+#test
 delay = 0.9
 
 async def handle_fate(client, message, name, channel, settings):
